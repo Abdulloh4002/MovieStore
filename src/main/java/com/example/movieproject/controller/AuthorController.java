@@ -2,7 +2,6 @@ package com.example.movieproject.controller;
 
 import com.example.movieproject.model.Author;
 import com.example.movieproject.repository.AuthorRepository;
-import com.fasterxml.jackson.annotation.JacksonInject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

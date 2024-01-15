@@ -14,35 +14,41 @@ public class GenreRepository {
     JdbcTemplate jdbcTemplate;
 
     public List<Genre> getGenres(){
-        return jdbcTemplate.query("select * from genre",new GenreMapper());
+        return jdbcTemplate.query(
+                "select * from genre",
+                    new GenreMapper()
+        );
     }
 
     public Genre getGenreById(Integer id){
-        return (Genre) jdbcTemplate.query("select * from genre where id=?",new Object[]{id},new GenreMapper());
+        return jdbcTemplate.queryForObject(
+                "select * from genre where id=?",
+                    new Object[]{id},
+                    new GenreMapper()
+        );
     }
 
     public void addGenre(Genre genre){
-        jdbcTemplate.query("insert into genre(name) values(?)",
-                new Object[]{
-                        genre.getName()
-                },
-                new GenreMapper()
+        jdbcTemplate.update(
+                "insert into genre(name) values(?)",
+                    genre.getName()
         );
     }
 
     public void updateGenre(Integer id, Genre genre){
 
-        jdbcTemplate.query("update genre set name = ? where id = ?)",
-                new Object[]{
-                        genre.getName(),
-                        id
-                },
-                new GenreMapper()
+        jdbcTemplate.update(
+                "update genre set name = ? where id = ?",
+                    genre.getName(),
+                    id
         );
     }
 
     public void deleteGenre(Integer id){
-        jdbcTemplate.query("delete from table genre where id = ?", new Object[]{id}, new GenreMapper());
+        jdbcTemplate.update(
+                "delete from table genre where id = ?",
+                    id)
+        ;
     }
 }
 

@@ -14,40 +14,46 @@ public class MovieRepository {
     JdbcTemplate jdbcTemplate;
 
     public List<Movie> getMovies(){
-        return jdbcTemplate.query("select * from movie",new MovieMapper());
+        return jdbcTemplate.query(
+                "select * from movie",
+                new MovieMapper()
+        );
     }
 
     public Movie getMovieById(Integer id){
-        return (Movie) jdbcTemplate.query("select * from movie where id=?",new Object[]{id},new MovieMapper());
+        return jdbcTemplate.queryForObject(
+                "select * from movie where id=?",
+                    new Object[]{id},
+                    new MovieMapper()
+        );
     }
 
     public void addMovie(Movie movie){
-        jdbcTemplate.query("insert into movie(name, release_year,author_id, genre_id) values(?, ?, ?, ?)",
-                new Object[]{
-                        movie.getName(),
-                        movie.getReleaseYear(),
-                        movie.getAuthor().getId(),
-                        movie.getGenre().getId()
-                },
-                new MovieMapper()
-        );
+        jdbcTemplate.update(
+                "insert into movie(name, release_year,author_id, genre_id) values(?, ?, ?, ?)",
+                    movie.getName(),
+                    movie.getReleaseYear(),
+                    movie.getAuthorId(),
+                    movie.getGenreId()
+            );
     }
 
     public void updateMovie(Integer id, Movie movie ){
 
-        jdbcTemplate.query("update movie set name = ?, release_year =  ?, author_id = ?, genre_id = ? where id = ?)",
-                new Object[]{
-                        movie.getName(),
-                        movie.getReleaseYear(),
-                        movie.getAuthor().getId(),
-                        movie.getGenre().getId(),
-                        id
-                },
-                new MovieMapper()
+        jdbcTemplate.update(
+                "update movie set name = ?, release_year =  ?, author_id = ?, genre_id = ? where id = ?)",
+                    movie.getName(),
+                    movie.getReleaseYear(),
+                    movie.getAuthorId(),
+                    movie.getGenreId(),
+                    id
         );
     }
 
     public void deleteMovie(Integer id){
-        jdbcTemplate.query("delete from table movie where id = ?", new Object[]{id}, new MovieMapper());
+        jdbcTemplate.update(
+                "delete from table movie where id = ?",
+                id
+        );
     }
 }

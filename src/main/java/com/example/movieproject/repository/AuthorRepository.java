@@ -14,36 +14,42 @@ public class AuthorRepository {
     JdbcTemplate jdbcTemplate;
 
     public List<Author> getAuthors(){
-        return jdbcTemplate.query("select * from author",new AuthorMapper());
+        return jdbcTemplate.query(
+                "select * from author",
+                    new AuthorMapper()
+        );
     }
 
     public Author getAuthorById(Integer id){
-        return (Author) jdbcTemplate.query("select * from author where id=?",new Object[]{id},new AuthorMapper());
+        return jdbcTemplate.queryForObject(
+                "select * from author where id=?",
+                    new Object[]{id},
+                    new AuthorMapper()
+        );
     }
 
     public void addAuthor(Author author){
-        jdbcTemplate.query("insert into author(name, surname) values(?, ?)",
-                new Object[]{
-                        author.getName(),
-                        author.getSurname()
-                },
-                new AuthorMapper()
+        jdbcTemplate.update(
+                "insert into author(name, surname) values(?, ?)",
+                    author.getName(),
+                    author.getSurname()
         );
     }
 
     public void updateAuthor(Integer id, Author author){
 
-        jdbcTemplate.query("update author set name = ?, surname =? where id = ?)",
-                new Object[]{
-                        author.getName(),
-                        author.getSurname(),
-                        id
-                },
-                new AuthorMapper()
+        jdbcTemplate.update(
+                "update author set name = ?, surname =? where id = ?)",
+                    author.getName(),
+                    author.getSurname(),
+                    id
         );
     }
 
     public void deleteAuthor(Integer id){
-        jdbcTemplate.query("delete from table author where id = ?", new Object[]{id}, new AuthorMapper());
+        jdbcTemplate.update(
+                "delete from table author where id = ?",
+                    id
+        );
     }
 }

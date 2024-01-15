@@ -14,14 +14,14 @@ public class Movie {
     private Integer id;
     private String name;
     private Integer releaseYear;
-    private Author author;
-    private Genre genre;
+    private Integer authorId;
+    private Integer genreId;
 
-    public Movie(String name, Integer releaseYear, Author author, Genre genre) {
+    public Movie(String name, Integer releaseYear, Integer authorId, Integer genreId) {
         this.name = name;
         this.releaseYear = releaseYear;
-        this.author = author;
-        this.genre = genre;
+        this.authorId = authorId;
+        this.genreId = genreId;
     }
 
     public Movie() {

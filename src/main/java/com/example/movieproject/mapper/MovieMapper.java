@@ -16,15 +16,8 @@ public class MovieMapper implements RowMapper<Movie> {
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getInt("release_year"),
-                new Author(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("surname")
-                ),
-                new Genre(
-                        rs.getInt("id"),
-                        rs.getString("name")
-                )
+                rs.getInt("author_id"),
+                rs.getInt("genre_id")
         );
     }
 }
